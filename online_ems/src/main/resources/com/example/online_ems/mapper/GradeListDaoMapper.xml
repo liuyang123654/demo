@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.online_ems.dao.GradeListDao">
+    <resultMap id="gradelistmap" type="com.example.online_ems.entity.Grade">
+        <result column="name" property="name"/>
+        <result column="coursename" property="coursename"/>
+        <result column="lastgrade" property="lastgrade"/>
+        <collection property="list" resultMap="gradesituationmap"/>
+    </resultMap>
+    <resultMap id="gradesituationmap" type="com.example.online_ems.entity.GradeSituation">
+        <result column="time" property="time"/>
+        <result column="score" property="score"/>
+    </resultMap>
+
+
+    <select id="seegradelist" resultMap="gradelistmap">
+        select S.name,C.coursename,S.lastgrade,E.time,E.score
+        from (online_ems.stuexam S left join online_ems.eachtimegrade E
+        on S.courseid=E.courseid and S.id=E.id)
+        left join online_ems.courses C on S.courseid=C.courseid
+        where S.courseid=#{courseid}
+        order by lastgrade,time
+    </select>
+
+</mapper>

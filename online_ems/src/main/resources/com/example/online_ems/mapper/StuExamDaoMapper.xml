@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.online_ems.dao.StuExamDao">
+    <select id="seeexamlist" parameterType="String" resultType="com.example.online_ems.entity.Exam">
+       select S.courseid,C.coursename,S.lastgrade,S.examnumber,C.date
+       from online_ems.stuexam S left join online_ems.courses C on S.courseid = C.courseid
+       where id=#{id}
+    </select>
+
+    <select id="getquestion" resultType="com.example.online_ems.entity.Question">
+        select courseid,number,value,stem,optionA,optionB,optionC,optionD,answer
+        from online_ems.questions
+        where number=#{number} and answer=#{answer}
+    </select>
+
+    <select id="savescore">
+        insert into online_ems.eachtimegrade
+        (time, id, courseid, score) VALUES (#{time},#{id},#{courseid},#{score});
+
+        update online_ems.stuexam
+        set examnumber=examnumber+1,lastgrade=#{score}
+        where courseid=#{courseid} and id=#{id};
+     </select>
+
+</mapper>

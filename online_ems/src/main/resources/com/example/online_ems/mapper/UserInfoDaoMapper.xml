@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.online_ems.dao.UserInfoDao">
+    <update id="userupdate" parameterType="com.example.online_ems.entity.UserInfo">
+        update online_ems.userinfomation set
+        name=#{name},sex=#{sex},phone=#{phone},college=#{college},password=#{password}
+        where id=#{id}
+    </update>
+    <insert id="addteacourse">
+        insert into online_ems.usercourse (id, courseid) values (#{id},#{courseid})
+    </insert>
+    <delete id="deleteteacourse">
+        delete from online_ems.usercourse where id=#{id} and courseid=#{courseid}
+    </delete>
+    <insert id="addstucourse">
+        insert into online_ems.usercourse (id, courseid) values (#{id},#{courseid});
+        insert into online_ems.stuexam (courseid, id, name, lastgrade, examnumber) VALUES (#{courseid},#{id},#{name},0,0);
+    </insert>
+    <delete id="deletestucourse">
+        delete from online_ems.usercourse where id=#{id} and courseid=#{courseid};
+        delete from online_ems.stuexam where id=#{id} and courseid=#{courseid};
+        delete from online_ems.eachtimegrade where id=#{id} and courseid=#{courseid};
+    </delete>
+    <select id="allcourselist" resultType="com.example.online_ems.entity.Course">
+        select courseid,coursename
+        from online_ems.courses
+    </select>
+</mapper>

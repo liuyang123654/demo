@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.online_ems.dao.TeaCourseListDao">
+
+    <select id="seetestpaper" parameterType="String" resultType="com.example.online_ems.entity.Question">
+       select courseid,number,value,stem,optionA,optionB,optionC,optionD,answer
+       from online_ems.questions
+       where courseid=#{courseid}
+    </select>
+
+    <select id="getquestionbynumber" parameterType="String" resultType="com.example.online_ems.entity.Question">
+        select courseid,number,value,stem,optionA,optionB,optionC,optionD,answer
+        from online_ems.questions
+        where number=#{number}
+    </select>
+    <insert id="addquestion" parameterType="com.example.online_ems.entity.Question">
+        insert ignore into online_ems.questions
+        (courseid,number,value, stem, optionA, optionB, optionC, optionD, answer)
+        values (#{courseid},#{number},#{value},#{stem},#{optionA},#{optionB},#{optionC},#{optionD},#{answer})
+    </insert>
+
+    <delete id="deletequestion">
+        delete from online_ems.questions
+        where number=#{number}
+    </delete>
+
+    <update id="updatequestion" parameterType="com.example.online_ems.entity.Question">
+        update online_ems.questions
+        set value=#{value},stem=#{stem},optionA=#{optionA},optionB=#{optionB},optionC=#{optionC},optionD=#{optionD},answer=#{answer}
+        where courseid=#{courseid} and number=#{number}
+    </update>
+
+</mapper>
