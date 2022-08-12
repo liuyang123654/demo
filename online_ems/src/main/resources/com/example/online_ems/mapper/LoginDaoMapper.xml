@@ -34,7 +34,7 @@
         select S1.name,S1.sex,S1.phone,S1.college,S1.password,S1.id,S1.type,S2.courseid,S3.coursename
         from (online_ems.userinfomation S1 left join online_ems.usercourse S2 on s1.id = S2.id)
         left join online_ems.courses S3 on S2.courseid=S3.courseid
-        where S1.id=#{id} and S1.password=#{password}
+        where S1.id=#{id} and S1.password=#{password} and S1.type=#{type}
      </select>
 
 
